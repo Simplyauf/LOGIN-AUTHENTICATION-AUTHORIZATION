@@ -206,10 +206,12 @@ ul {
 }
 
 .login-register-switch-container {
+  margin-top: 1.2em;
   font-size: 14px;
 }
 
 .page-link {
+  cursor: pointer;
   margin-left: 0.1em;
   color: #645cff;
   text-decoration: underline;
