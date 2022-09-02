@@ -17,19 +17,24 @@ const dummySite = (req, res) => {
 
 const login = async (req, res) => {
   const { username, password } = req.body;
-  console.log(req);
+
   if (!username || !password) {
     throw new CustomAPIError("parameters missing", 400);
-  } else {
+  }
+  const userExists = await userModel.findOne({ username });
+  console.log(userExists);
+  if (userExists && (await bcrypt.compare(password, userExists.password))) {
     const token = generateToken(username);
     console.log(token);
     res.json({ msg: "sucessful login", token: token });
+  } else {
+    throw new CustomAPIError("Invalid password or username", 400);
   }
 };
 
 const registerUser = async (req, res) => {
   const { username, password } = req.body;
-  console.log(req.body);
+
   if (!username || !password) {
     throw new CustomAPIError("parameters missing", 400);
   }
@@ -40,8 +45,6 @@ const registerUser = async (req, res) => {
   //hash password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-
-  console.log(hashedPassword);
 
   //register user
   const user = await userModel.create({ username, password: hashedPassword });
@@ -61,7 +64,7 @@ const dashboard = (req, res) => {
   console.log(req.user);
 
   const username = req.user;
-  const luckyNumsber = Math.floor(Math.random() * 100);
+  const luckyNumber = Math.floor(Math.random() * 100);
   return res.json({
     msg: `Hello ${username}`,
     secret: `Here is your authorisez data,your lucky nmber is ${luckyNumber}`,
