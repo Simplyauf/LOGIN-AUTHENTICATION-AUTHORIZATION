@@ -25,6 +25,8 @@ formDOM.addEventListener("submit", async (e) => {
   const username = usernameInputDOM.value;
   const password = passwordInputDOM.value;
 
+  console.log(loginAndRegisterSwitchContainerDom);
+
   if (loginAndRegisterSwitchContainerDom.classList.contains("register-link")) {
     try {
       const { data } = await axios.post("/api/v1/login", { username, password });
