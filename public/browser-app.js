@@ -5,15 +5,15 @@ const formAlertDOM = document.querySelector(".form-alert");
 const resultDOM = document.querySelector(".result");
 const btnDOM = document.querySelector("#data");
 const tokenDOM = document.querySelector(".token");
-const oppositeLinkContainer = document.querySelector(".opposite-link-container");
+const loginAndRegisterSwitchContainerDom = document.querySelector(".login-register-switch-container");
 
 function switchBtwnLoginAndRegisterPage() {
-  if (oppositeLinkContainer.classList.contains("register-link")) {
-    oppositeLinkContainer.classList.remove("register-link");
-    oppositeLinkContainer.classList.add("login-link");
+  if (loginAndRegisterSwitchContainerDom.classList.contains("register-link")) {
+    loginAndRegisterSwitchContainerDom.classList.remove("register-link");
+    loginAndRegisterSwitchContainerDom.classList.add("login-link");
   } else {
-    oppositeLinkContainer.classList.remove("login-link");
-    oppositeLinkContainer.classList.add("register-link");
+    loginAndRegisterSwitchContainerDom.classList.remove("login-link");
+    loginAndRegisterSwitchContainerDom.classList.add("register-link");
   }
 }
 
@@ -25,7 +25,7 @@ formDOM.addEventListener("submit", async (e) => {
   const username = usernameInputDOM.value;
   const password = passwordInputDOM.value;
 
-  if (oppositeLinkContainer.classList.contains("register-link")) {
+  if (loginAndRegisterSwitchContainerDom.classList.contains("register-link")) {
     try {
       const { data } = await axios.post("/api/v1/login", { username, password });
 
@@ -48,8 +48,7 @@ formDOM.addEventListener("submit", async (e) => {
       tokenDOM.textContent = "no token present";
       tokenDOM.classList.remove("text-success");
     }
-  }
-  else {
+  } else {
     try {
       const { data } = await axios.post("/api/v1/register", { username, password });
 
